@@ -1,78 +1,51 @@
-# Portfolio Template
+# Clef Piedraverde — Portfolio
 
-A personal portfolio with a fixed profile rail, an animated contour background, a bento home screen, a 3D page carousel, and a separate app-style layout for phones. Every piece of content is a placeholder. You swap in your own.
+Personal portfolio of **Clef Lennard M. Piedraverde**, economist and data analyst based in Quezon City.
 
-Stack: Vite 6, React 19, TypeScript, plain CSS custom properties, Three.js, GSAP, Lenis, React Router 7, Phosphor icons, Poppins.
+I turn production, trade and price data into the reports and forecasts behind Philippine agriculture and fisheries programs.
 
-## What it looks like
+- **LinkedIn:** [clef-lennard-piedraverde](https://ph.linkedin.com/in/clef-lennard-piedraverde-739917234)
+- **Facebook:** [profile](https://www.facebook.com/profile.php?id=61591809177840)
+- **Email:** [cleflennard@gmail.com](mailto:cleflennard@gmail.com)
 
-Straight from this repo, placeholders and all.
+## What's inside
 
-**Desktop** - the profile rail, the contour background and the bento home.
+- **Home**: headline, quick facts and a bento overview
+- **Experience**: roles and responsibilities, most recent first
+- **Education & Skills**: degree, eligibility, trainings and tools
+- **About** and **Contact**
 
-![Desktop: profile rail on the left, headline, tools marquee and a bento grid of project, about, credential, services and testimonial cards](docs/screenshots/desktop.png)
+On a desktop the site has a fixed profile rail and an animated contour background. Below 1100px wide it switches to an app-style phone layout with light and dark themes.
 
-**Phone** - an app-style layout: a floating tab bar, a glance widget for your stats, app-icon tools and swipeable shelf cards. Light and dark.
+## Tech stack
 
-<p>
-  <img src="docs/screenshots/mobile-light.png" alt="Phone, light theme: profile header, one-line headline, stats widget, tools row and explore cards above a floating tab bar" width="300">
-  &nbsp;&nbsp;
-  <img src="docs/screenshots/mobile-dark.png" alt="Phone, dark theme: the same Home screen on a navy background" width="300">
-</p>
+Vite 6, React 19, TypeScript, plain CSS custom properties, Three.js, GSAP, Lenis, React Router 7, Phosphor icons, Poppins.
 
-## Run it
+## Run it locally
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173
-npm run build      # typecheck + production build to dist/
-npm run lint       # ESLint with the TypeScript parser and the React hooks rules
+npm run dev                     # http://localhost:5173
+npm run dev -- --port 3000      # on a different port
+npm run build                   # typecheck + production build to dist/
+npm run preview                 # serve the production build
 ```
 
-## Make it yours
-
-Every spot that needs your content says **PLACEHOLDER** and describes what goes there. You can edit the files yourself, or open the repo in an AI coding tool and tell it what to put in each spot.
+## Editing content
 
 | What | Where |
 |---|---|
-| Name, handle, photo, email, socials, Home headline, phone stats and their icons | `src/data/profile.ts` (start here) |
-| Phone headline size (holds your headline on one line) | `--headline-em` in `src/styles/mobile-pass.css` - the comment there shows how to measure it |
-| Your photo | `public/avatar.svg` (or point `avatarSrc` at a `.webp`/`.png`) |
-| Page headlines and copy | the top of each page component: `ProjectsGrid`, `ServicesGrid`, `ShowcaseGrid`, `TestimonialsGrid`, `AboutGrid`, `ContactGrid` in `src/components/` |
-| Funnel pages and websites (the 3D carousel) | `src/data/funnels.ts` + HTML files in `public/funnels/` and `public/samples/` |
-| Projects, apps, side builds | `src/data/projects.ts`, `src/data/ai-stack.ts` |
+| Name, photo, email, socials, headline, quick stats | `src/data/profile.ts` |
+| Roles, education, skills, trainings | `src/data/cv.ts` |
+| Photo | `src/images/clef.jpg` |
 | FAQs | `src/data/faqs.ts` |
-| Tools marquee | `src/components/ToolsMarquee.tsx` (logos in `public/icons/`) |
-| Testimonial videos | `public/testimonials/`, then set `src` in `TestimonialsGrid.tsx` |
-| Contact form | `src/lib/contact.ts` (opens the visitor's email app by default; set `VITE_CONTACT_ENDPOINT` to post to your own backend) |
-| SEO, share image, favicon | `index.html`, `public/favicon.svg` |
+| Page title, SEO, favicon | `index.html`, `public/favicon.svg` |
 | Colors | `src/styles/tokens.css` |
-| Privacy / Terms | `src/components/Privacy.tsx`, `src/components/ToS.tsx` |
 
-### Adding your own funnels and websites
+## Credits & license
 
-1. Put the page's HTML in `public/funnels/` (single pages, shown 16:9) or `public/samples/` (full websites, shown 3:4).
-2. Add an entry to `src/data/funnels.ts`.
-3. Run `node scripts/make-thumbs.mjs` to render the thumbnails. It uses the Playwright install that comes with the dev dependencies (run `npx playwright install chromium` once if needed).
+Built on an open portfolio template, used under the [PolyForm Noncommercial 1.0.0](LICENSE) license, which allows using it for your own personal portfolio. See [LICENSE](LICENSE) for the full terms and required notices.
 
-To regenerate the placeholder pages: `node scripts/make-placeholder-sites.mjs`.
-
-## Notes
-
-- The background shader measures the visitor's frame rate and steps down on slow machines (`src/lib/perf.ts`). Keep any large `backdrop-filter` blur off the layers above it, because blur over an animated canvas is the most expensive thing on the page.
-- From 1100px down, the site switches to the phone layout. `src/styles/mobile-app.css` owns its components (`TabBar`, `QuickMenu`, `HomeMobile`); `src/styles/mobile-pass.css` holds the motion (the tab pill, the bar hiding on scroll, page arrival, tile depth) and the native-feel fixes. Everything respects `prefers-reduced-motion` and the site's own Reduce motion switch.
-- Anything new you add above the fold on Home must join the intro hold-back list in `src/styles/boot.css`. Otherwise it shows through the intro animation.
-
-## Credits
-
-- Contour background technique inspired by the landonorris.com site by OFF+BRAND. The simplex noise is Ashima Arts / Ian McEwan (MIT).
-- Icons: [Phosphor](https://phosphoricons.com) (MIT). Tool logos in `public/icons/` are trademarks of their owners and are included as examples only.
-- Font: Poppins (SIL Open Font License).
-
-## License
-
-[PolyForm Noncommercial 1.0.0](LICENSE), plus one extra permission: you can use it for **your own** portfolio, even if that portfolio promotes your paid services.
-
-What it does not allow without a commercial license: selling or reselling this template, or building portfolio sites for other people for payment. For a commercial license, email brewedops@gmail.com.
-
-Versions up to tag `v1.0.0-mit` (commit d3c05da) were MIT and stay MIT. Everything after that is under the license above.
+- The simplex noise is by Ashima Arts and Ian McEwan (MIT).
+- Icons are from [Phosphor](https://phosphoricons.com) (MIT). The tool logos are trademarks of their owners.
+- The font is Poppins (SIL Open Font License).
