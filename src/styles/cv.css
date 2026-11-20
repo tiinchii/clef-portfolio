@@ -1,0 +1,413 @@
+/* ============================================
+   CV VIEWS - Experience, Skills, Education
+   The same object language as the rest of the site (the glass sheet, raised
+   paper cards, plated accent icons, tag chips) but laid out to scroll: these
+   views carry a whole CV, so they are not fixed to the panel box.
+   ============================================ */
+@media (min-width: 1100px) {
+  .pgrid.cv { height: auto; display: flex; padding-bottom: clamp(40px, 7vh, 80px); }
+}
+.cv__glass { gap: clamp(12px, 1.6vh, 18px); }
+
+/* ---------- Cards ---------- */
+.cv-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: clamp(14px, 1.6vh, 20px) clamp(14px, 1.3vw, 22px);
+  border-radius: var(--radius-card);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  box-shadow:
+    0 1px 2px rgba(6, 32, 26, 0.04),
+    0 24px 50px -36px rgba(6, 32, 26, 0.45);
+}
+.cv-card__head { display: flex; align-items: center; gap: 12px; }
+.cv-card__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: var(--orange);
+  color: var(--white);
+  box-shadow: 0 8px 18px -10px rgba(31, 138, 85, 0.9);
+}
+.cv-card__title {
+  font-size: clamp(15px, 1.05vw, 18px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+}
+.cv-card__note { margin-top: 2px; font-size: 13px; color: var(--muted); }
+
+/* The one dark plate on a page, for the fact that matters most. */
+.cv-card--dark { background: var(--panel-dark); border-color: transparent; }
+.cv-card--dark .cv-card__title { color: #EEF5FC; }
+.cv-card--dark .cv-card__note { color: rgba(238, 245, 252, 0.7); }
+
+.cv-grid { display: grid; gap: clamp(12px, 1.6vh, 18px); min-width: 0; list-style: none; padding: 0; }
+.cv-stack { display: flex; flex-direction: column; gap: clamp(12px, 1.6vh, 18px); min-width: 0; }
+@media (min-width: 900px) {
+  .cv-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  .cv-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* ---------- Tags and chips ---------- */
+.cv-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  margin-left: 8px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  background: var(--orange);
+  color: var(--white);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.cv-tag--soft {
+  background: color-mix(in srgb, var(--orange) 12%, transparent);
+  color: var(--orange-ink);
+}
+.cv-chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; }
+.cv-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+/* ---------- Experience: the timeline ---------- */
+.cv-timeline { list-style: none; padding: 0; display: flex; flex-direction: column; }
+.cv-timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 128px 24px minmax(0, 1fr);
+  gap: 0 8px;
+  padding-bottom: clamp(12px, 1.6vh, 18px);
+}
+.cv-timeline__item:last-child { padding-bottom: 0; }
+/* The spine: one hairline down the dot column, stopping at the last dot. */
+.cv-timeline__item::before {
+  content: '';
+  position: absolute;
+  top: 26px;
+  bottom: -4px;
+  left: calc(128px + 8px + 11px);
+  width: 2px;
+  background: var(--line);
+}
+.cv-timeline__item:last-child::before { display: none; }
+.cv-timeline__when {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  text-align: right;
+}
+.cv-timeline__to { font-weight: 500; color: var(--muted); }
+.cv-timeline__dot {
+  justify-self: center;
+  width: 12px;
+  height: 12px;
+  margin-top: 20px;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 2px var(--line-strong);
+}
+.cv-timeline__dot[data-now] {
+  background: var(--orange);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--orange) 22%, transparent);
+}
+
+.cv-role__head { display: flex; align-items: flex-start; gap: 12px; }
+.cv-role__titles { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.cv-role__title { font-size: clamp(16px, 1.15vw, 19px); font-weight: 700; line-height: 1.25; color: var(--navy); }
+.cv-role__org { font-size: 13.5px; font-weight: 600; color: var(--navy); }
+.cv-role__org span { font-weight: 500; color: var(--muted); }
+/* The rail carries the dates on desktop; on narrow screens it is gone and
+   the card says them itself. */
+.cv-role__dates { display: none; font-size: 12.5px; color: var(--muted); }
+.cv-role__summary { font-size: 14px; line-height: 1.55; color: var(--muted); }
+
+.cv-role__duties summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--orange-ink);
+  cursor: pointer;
+  list-style: none;
+}
+.cv-role__duties summary::-webkit-details-marker { display: none; }
+.cv-role__duties summary svg { transition: transform var(--dur-fast) var(--ease-out); }
+.cv-role__duties[open] summary svg { transform: rotate(180deg); }
+.cv-role__duties summary:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+.cv-role__duties ul {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 10px;
+  padding-left: 0;
+  list-style: none;
+}
+.cv-role__duties li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--navy);
+}
+.cv-role__duties li::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+@media (max-width: 719px) {
+  .cv-timeline__item { grid-template-columns: minmax(0, 1fr); }
+  .cv-timeline__item::before, .cv-timeline__when, .cv-timeline__dot { display: none; }
+  .cv-role__dates { display: block; }
+}
+
+/* ---------- Skills ---------- */
+.cv-list { display: flex; flex-direction: column; list-style: none; padding: 0; }
+.cv-list__row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 2px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--navy);
+}
+.cv-list__row + .cv-list__row { border-top: 1px solid var(--line); }
+.cv-list__row svg { flex: none; color: var(--orange); }
+.cv-list__text { flex: 1 1 auto; min-width: 0; }
+
+.cv-meters { display: flex; flex-direction: column; list-style: none; padding: 0; }
+.cv-meter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 2px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--navy);
+}
+.cv-meter + .cv-meter { border-top: 1px solid var(--line); }
+.cv-meter__bar { display: inline-flex; gap: 4px; }
+.cv-meter__bar i {
+  display: block;
+  width: 22px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--tint-strong);
+}
+.cv-meter__bar i[data-on] { background: var(--orange); }
+
+.cv-courses { display: flex; flex-direction: column; list-style: none; padding: 0; }
+.cv-course { display: flex; flex-direction: column; gap: 4px; padding: 11px 2px; }
+.cv-course + .cv-course { border-top: 1px solid var(--line); }
+.cv-course .cv-chips { margin-top: 6px; }
+.cv-course__top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.cv-course__title { font-size: 14px; font-weight: 700; color: var(--navy); }
+.cv-course__date { flex: none; font-size: 12px; font-weight: 600; color: var(--muted); }
+.cv-course__by { font-size: 13px; color: var(--muted); }
+
+/* ---------- Education ---------- */
+.cv-schools { display: flex; flex-direction: column; list-style: none; padding: 0; }
+.cv-school { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; padding: 11px 2px; }
+.cv-school + .cv-school { border-top: 1px solid var(--line); }
+.cv-school__year { font-size: 12.5px; font-weight: 700; color: var(--orange-ink); padding-top: 2px; }
+.cv-school__body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.cv-school__program { font-size: 14px; font-weight: 700; line-height: 1.4; color: var(--navy); }
+.cv-school__program .cv-tag { margin-left: 6px; }
+.cv-school__name { font-size: 13px; color: var(--muted); }
+
+.cv-papers { display: flex; flex-direction: column; list-style: none; padding: 0; }
+.cv-paper { display: flex; flex-direction: column; gap: 4px; padding: 11px 2px; }
+.cv-paper + .cv-paper { border-top: 1px solid var(--line); }
+.cv-paper__kind {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange-ink);
+}
+.cv-paper__title { font-size: 14px; font-weight: 700; line-height: 1.45; color: var(--navy); }
+.cv-paper__detail { font-size: 12.5px; color: var(--muted); }
+
+.cv-rows { display: grid; list-style: none; padding: 0; column-gap: 28px; }
+@media (min-width: 900px) {
+  .cv-rows--2col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.cv-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 2px;
+  border-top: 1px solid var(--line);
+}
+.cv-rows:not(.cv-rows--2col) .cv-row:first-child { border-top: 0; }
+@media (max-width: 899px) {
+  .cv-rows--2col .cv-row:first-child { border-top: 0; }
+}
+@media (min-width: 900px) {
+  .cv-rows--2col .cv-row:nth-child(-n + 2) { border-top: 0; }
+}
+.cv-row__main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.cv-row__main b { font-size: 13.5px; font-weight: 700; line-height: 1.4; color: var(--navy); }
+.cv-row__main span { font-size: 12.5px; line-height: 1.45; color: var(--muted); }
+.cv-row__date {
+  flex: none;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---------- Home: the credential ring carries a glyph, not a badge image ---------- */
+.bento__badge-ring--glyph { color: var(--orange); }
+
+/* ---------- Home: wide ledger cards give the list the larger share ---------- */
+@media (min-width: 1100px) {
+  .bento--cv .bento__card--wide { grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr); }
+}
+
+/* ---------- Home: the publication as a small title page ----------
+   A size container, so on a short screen it drops the author line and
+   clamps the title to whole lines instead of cutting one in half. */
+.bento__paper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  overflow: hidden;
+  container-type: size;
+  padding: clamp(10px, 1.4vh, 16px) 14px;
+  border-radius: 14px;
+  background: var(--white);
+  box-shadow: inset 0 0 0 1px var(--line), inset 3px 0 0 var(--orange);
+}
+.bento__paper-kicker {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange-ink);
+}
+.bento__paper-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  font-size: clamp(12.5px, 0.9vw, 14px);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--navy);
+}
+.bento__paper-by {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+@container (max-height: 150px) {
+  .bento__paper-by { display: none; }
+  .bento__paper-title { -webkit-line-clamp: 3; }
+}
+@container (max-height: 110px) {
+  .bento__paper-title { -webkit-line-clamp: 2; }
+}
+@media (max-width: 1099px) {
+  .bento__paper { height: 170px; flex: none; }
+}
+
+/* ---------- The photo ----------
+   The template expects a transparent cutout; this is a studio photo on its
+   own grey ground. So it is cropped instead of faded: a disc in the rail,
+   a framed card on About. */
+@media (min-width: 1100px) {
+  /* Height set outright: aspect-ratio alone lets the tall photo stretch the
+     box into an oval. */
+  .rail .rail__avatar {
+    width: clamp(120px, 18vh, 168px);
+    height: clamp(120px, 18vh, 168px);
+    border-radius: 50%;
+    overflow: hidden;
+    background: #B9BCBD;
+    box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px var(--line-strong), 0 18px 36px -18px rgba(6, 32, 26, 0.55);
+  }
+  .rail .rail__avatar::before { display: none; }
+  /* A headshot crop: about the photo's y 120-620 / x 90-590 (of 679x881),
+     so the face sits centred with headroom above the hair, and the shoulders
+     and tie close the bottom of the disc. Origin and scale are solved from
+     that window. */
+  .rail .rail__avatar img {
+    object-fit: cover;
+    object-position: 50% 0%;
+    transform: scale(1.36);
+    transform-origin: 51% 67%;
+    filter: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+/* About fills the panel but grows past it (and the panel scrolls) when the
+   copy needs more height than a short screen has, instead of spilling out
+   of the sheet. The photo is taken out of flow so it never sets the height:
+   it fills whatever the copy column makes. */
+@media (min-width: 1100px) {
+  .pgrid.agrid { height: auto; min-height: 100%; }
+  .agrid .agrid__glass { height: auto; }
+}
+.agrid .agrid__portrait { position: relative; margin: 0; min-height: 260px; }
+.agrid .agrid__portrait img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 679 / 881;
+  transform: translateX(-50%);
+  object-fit: cover;
+  object-position: 50% 20%;
+  border-radius: var(--radius-card);
+  box-shadow: 0 0 0 1px var(--line-strong), 0 30px 60px -30px rgba(6, 32, 26, 0.55);
+}
+
+/* ---------- About: Phosphor glyphs in the mark tiles ---------- */
+.agrid__mark svg { width: 58%; height: 58%; color: var(--orange-ink); }
+[data-theme='dark'] .agrid__mark svg { color: #17653F; }
